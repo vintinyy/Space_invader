@@ -1,12 +1,13 @@
 import pygame
 import random
+from pygame import mixer
 
 #initalize 
 pygame.init()
 
 #initalize display
 screen = pygame.display.set_mode((800,600))
-background = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\background.jpg")
+background = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\background.jpg")
 
 #score
 score_value = 0
@@ -25,7 +26,7 @@ def gameOver():
     screen.blit(overText, (200,250))
 
 #player
-playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\spaceship.png")
+playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\spaceship.png")
 playerX = 370
 playerY = 480
 playerXchange = 0
@@ -36,7 +37,7 @@ def player(X, Y):
 #enemy
 class Enemy:
     def __init__(self):
-        self.image = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\alien.png")
+        self.image = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\alien.png")
         self.x = random.randint(0,736)
         self.y = random.randint(0,150)
         self.Xchange = 3
@@ -146,6 +147,8 @@ while running:
             laserY = playerY
             laserState = 'ready'
             score_value+=1
+            explosionSound = mixer.Sound("assets\\explosion.wav")
+            explosionSound.play()
 
         enemy.draw()
     
