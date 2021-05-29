@@ -13,10 +13,16 @@ score_value = 0
 font = pygame.font.Font("freesansbold.ttf", 32)
 textX = 10
 textY = 10
+overFont = pygame.font.Font("freesansbold.ttf", 64)
+
 
 def showScore(x,y):
     score = font.render("Score: " + str(score_value), True, (255,255,255))
     screen.blit(score, (x,y))
+
+def gameOver():
+    overText = overFont.render("Game Over", True, (255,255,255))
+    screen.blit(overText, (200,250))
 
 #player
 playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\spaceship.png")
@@ -102,6 +108,7 @@ while running:
                 playerXchange = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 playerYchange = 0
+        
 
 
     #player movement
@@ -128,6 +135,9 @@ while running:
         if enemy.x > 736:
             enemy.setXchange(-3)
             enemy.adjustY()
+        if enemy.y > 550:
+            gameOver()
+            break
         
         enemy.adjustX()
         #check for collison     
