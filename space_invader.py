@@ -8,6 +8,16 @@ pygame.init()
 screen = pygame.display.set_mode((800,600))
 background = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\background.jpg")
 
+#score
+score_value = 0
+font = pygame.font.Font("freesansbold.ttf", 32)
+textX = 10
+textY = 10
+
+def showScore(x,y):
+    score = font.render("Score: " + str(score_value), True, (255,255,255))
+    screen.blit(score, (x,y))
+
 #player
 playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\spaceship.png")
 playerX = 370
@@ -69,6 +79,8 @@ def isCollison(enemyX, enemyY, laserX, laserY):
 running = True
 while running:
     screen.blit(background,(0,0))
+    showScore(textX,textY)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -123,6 +135,7 @@ while running:
             enemy.respawn()
             laserY = playerY
             laserState = 'ready'
+            score_value+=1
 
         enemy.draw()
     
