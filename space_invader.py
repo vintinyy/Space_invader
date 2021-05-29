@@ -6,10 +6,10 @@ pygame.init()
 
 #initalize display
 screen = pygame.display.set_mode((800,600))
-background = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space invader\\background.jpg")
+background = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\background.jpg")
 
 #player
-playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space invader\\spaceship.png")
+playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\spaceship.png")
 playerX = 370
 playerY = 480
 playerXchange = 0
@@ -20,7 +20,7 @@ def player(X, Y):
 #enemy
 class Enemy:
     def __init__(self):
-        self.image = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space invader\\alien.png")
+        self.image = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\alien.png")
         self.x = random.randint(0,736)
         self.y = random.randint(0,150)
         self.Xchange = 3
@@ -48,7 +48,7 @@ for i in range(numEnemies):
     enemies.append(Enemy())
    
 #laser
-laserImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space invader\\assets\\pixel_laser_blue.png")
+laserImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\pixel_laser_blue.png")
 laserX = 0
 laserY = 0
 laserXchange = 3
@@ -119,8 +119,9 @@ while running:
         
         enemy.adjustX()
         #check for collison     
-        if isCollison(enemy.x, enemy, laserX, laserY):
+        if isCollison(enemy.x, enemy.y, laserX, laserY):
             enemy.respawn()
+            laserY = playerY
             laserState = 'ready'
 
         enemy.draw()
