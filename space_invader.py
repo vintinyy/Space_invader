@@ -26,13 +26,32 @@ def gameOver():
     screen.blit(overText, (200,250))
 
 #player
-playerImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\spaceship.png")
-playerX = 370
-playerY = 480
-playerXchange = 0
-playerYchange = 0
-def player(X, Y):
-    screen.blit(playerImage, (X,Y))
+class Player:
+    def __init__(self):
+        self.image = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\spaceship.png")
+        self.X = 370
+        self.Y = 480
+        self.Xchange = 0
+        self.Ychange = 0
+
+
+    def draw(self):
+        screen.blit(self.image, (self.X, self.Y))
+    
+    def setXchange(self, change):
+        self.Xchange = change
+    
+    def setYchange(self, change):
+        self.Ychange = change
+    
+    def adjustY(self):
+        self.Y += self.Ychange
+
+    def adjustX(self):
+        self.X += self.Xchange
+
+player = Player()
+
 
 #enemy
 class Enemy:
@@ -62,7 +81,8 @@ class Enemy:
 numEnemies = 6
 enemies = []
 for i in range(numEnemies):
-    enemies.append(Enemy())
+    e = Enemy()
+    enemies.append(e)
    
 #laser
 laserImage = pygame.image.load("c:\\Users\\vinti\\OneDrive\\Documents\\Python Projects\\Python\\Space_invader\\assets\\pixel_laser_blue.png")
@@ -93,40 +113,40 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:               
-                playerXchange = -6
+                player.setXchange(-6)
             if event.key == pygame.K_RIGHT:               
-                playerXchange = 6
+                player.setXchange(6)
             if event.key == pygame.K_UP:               
-                playerYchange = -6
+                player.setYchange(-6) 
             if event.key == pygame.K_DOWN:              
-                playerYchange = 6
+                player.setYchange(6)
             if event.key == pygame.K_SPACE:
-                laserX = playerX
-                laserY = playerY
+                laserX = player.X
+                laserY = player.Y
                 laser(laserX, laserY)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                playerXchange = 0
+                player.setXchange(0)
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                playerYchange = 0
+                player.setYchange(0)
         
 
 
     #player movement
-    playerX += playerXchange
-    playerY += playerYchange
+    player.adjustX()
+    player.adjustY()
 
     #check for boundaries
-    if playerX > 736:
-        playerX = 736
-    if playerX < 0:
-        playerX = 0
-    if playerY > 536:
-        playerY = 536
-    if playerY < 0:
-        playerY = 0
+    if player.X > 736:
+        player.X = 736
+    if player.X < 0:
+        player.X = 0
+    if player.Y > 536:
+        player.Y = 536
+    if player.Y < 0:
+        player.Y = 0
             
-    player(playerX, playerY)
+    player.draw()
 
     #enemy movement
     for enemy in enemies:
@@ -144,7 +164,7 @@ while running:
         #check for collison     
         if isCollison(enemy.x, enemy.y, laserX, laserY):
             enemy.respawn()
-            laserY = playerY
+            laserY = player.Y
             laserState = 'ready'
             score_value+=1
             explosionSound = mixer.Sound("assets\\explosion.wav")
