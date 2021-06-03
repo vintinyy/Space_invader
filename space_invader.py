@@ -33,10 +33,19 @@ class Player:
         self.Y = 480
         self.Xchange = 0
         self.Ychange = 0
+        self.health = 100
 
 
     def draw(self):
         screen.blit(self.image, (self.X, self.Y))
+    
+    def damage(self, amount):
+        self.health -= amount
+    
+    def heal(self, amount):
+        self.health += amount
+
+    #def die():
     
     def setXchange(self, change):
         self.Xchange = change
@@ -157,6 +166,10 @@ while running:
             enemy.setXchange(-3)
             enemy.adjustY()
         if enemy.y > 550:
+            player.damage(25)
+
+        #check for player health
+        if player.health <= 0:
             gameOver()
             break
         
